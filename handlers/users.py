@@ -19,15 +19,11 @@ async def start(message: types.Message, state: FSMContext):
     try:
         db.get_user(message.from_user.id)
     except:
-        db.add_user(message.message.from_user.id)
+        pass
 
     characters = db.get_all_categories()
     markup = await kb.start_kb(characters)
     await message.answer(cfg.misc.messages.start, reply_markup=markup)
-    try:
-        pass
-    except:
-        await message.message.answer(cfg.misc.messages.start, reply_markup=markup)
 
     await state.finish()
 

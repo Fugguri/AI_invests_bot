@@ -8,4 +8,4 @@ push:
 
 upgrade:
 	git pull 
-	pytnon3 main.py
+	python3 main.py
