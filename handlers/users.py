@@ -19,7 +19,7 @@ async def start(message: types.Message, state: FSMContext):
     try:
         db.get_user(message.from_user.id)
     except:
-        db.add_user(message.from_user)
+        db.add_user(message.message.from_user.id)
 
     characters = db.get_all_categories()
     markup = await kb.start_kb(characters)
