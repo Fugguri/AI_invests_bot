@@ -21,10 +21,10 @@ async def register_all_middlewares(dp, config, keyboards, db, bot, ):
         config=config, db=db, keyboards=keyboards, bot=bot))
 
 
-def register_all_handlers(dp, keyboards):
+def register_all_handlers(dp, keyboards,db):
     register_register_handlers(dp,keyboards)
     register_admin_handlers(dp, keyboards)
-    register_user_handlers(dp, keyboards)
+    register_user_handlers(dp, keyboards,db)
 
 async def main():
     logging.basicConfig(
@@ -47,7 +47,7 @@ async def main():
     bot['config'] = config
 
     await register_all_middlewares(dp, config, kbs, db, bot)
-    register_all_handlers(dp, kbs)
+    register_all_handlers(dp, kbs,db)
 
     # start
     dp.skip_updates = False

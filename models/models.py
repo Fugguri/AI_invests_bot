@@ -32,7 +32,7 @@ class Keyboard:
     category: str
     callback: str
     link: str
-
+    message:str
 
 @dataclass
 class Category:

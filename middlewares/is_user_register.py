@@ -20,7 +20,6 @@ class IsUserRegisterMiddleware(middlewares.BaseMiddleware):
 
         telegram_id= message.from_user.id
         if not self.db.is_user_registered(telegram_id) and not current_state:
-            print("tr")
             await start_register(message,state)
             raise handler.CancelHandler()
         

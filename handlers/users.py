@@ -19,7 +19,7 @@ async def start(message: types.Message, state: FSMContext):
     try:
         db.get_user(message.from_user.id)
     except:
-        pass
+        db.add_user(message.from_user)
 
     characters = db.get_all_categories()
     markup = await kb.start_kb(characters)
@@ -42,11 +42,13 @@ async def projects(message: types.Message, state: FSMContext):
     else:
         pass
 
-    # categories: tuple[Category] = db.get_all_categories()
+async def buttons(callback: types.CallbackQuery, state: FSMContext):
+    cfg: Config = ctx_data.get()['config']
+    kb: Keyboards = ctx_data.get()['keyboards']
+    db: Database = ctx_data.get()['db']
+    keyboard = db.get_button_by_callback(callback.data)
+    await callback.message.answer(keyboard.message)
 
-    # for cat in categories:
-    #     # print(cat)
-    #     if cat.name == message.text:
 
 
 async def check(callback: types.CallbackQuery):
@@ -84,9 +86,11 @@ async def back(callback: types.CallbackQuery, state: FSMContext, callback_data: 
     await callback.message.delete()
 
 
-def register_user_handlers(dp: Dispatcher, kb: Keyboards):
+def register_user_handlers(dp: Dispatcher, kb: Keyboards,db: Database):
     dp.register_message_handler(start, commands=["start"], state="*")
     dp.register_message_handler(projects, state="*")
     dp.register_callback_query_handler(back, kb.back_cd.filter(), state="*")
     dp.register_callback_query_handler(
         back, lambda x: x.data == "check", state="*")
+    dp.register_callback_query_handler(
+        buttons,  state="*")

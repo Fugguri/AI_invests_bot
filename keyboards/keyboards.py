@@ -16,14 +16,11 @@ class Keyboards:
         self.back_cd = CallbackData("back", "role")
 
     async def start_kb(self, categories: tuple[Category]):
-
-        kb = ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         res = []
         for category in categories:
-            res.append(KeyboardButton(text=category.name))
-        kb.row(*res)
-        kb.row_width = 2
-        return kb
+            res.append([KeyboardButton(text=category.name)])
+        
+        return ReplyKeyboardMarkup(keyboard=res,resize_keyboard=True, row_width=3)
 
     async def bots_kb(self, bots):
         kb = InlineKeyboardMarkup()

@@ -62,7 +62,8 @@ class Database:
                         text TEXT,
                         category text,
                         callback TEXT, 
-                        link text
+                        link text,
+                        message TEXT
                         );"""
             cursor.execute(create)
             self.connection.commit()
@@ -122,6 +123,15 @@ class Database:
             for user in res:
                 result.append(Channel(*user))
         return result
+    def get_button_by_callback(self,callback_data:str)->Keyboard:
+        self.connection.ping()
+        with self.connection.cursor() as cursor:
+            cursor.execute(
+                """SELECT * FROM Keyboards where callback=%s""",(callback_data,))
+            res = cursor.fetchone()
+            self.connection.commit()
+
+        return Keyboard(*res)
 
     def get_category(self, name):
         self.connection.ping()
