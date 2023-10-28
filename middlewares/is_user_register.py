@@ -13,8 +13,7 @@ class IsUserRegisterMiddleware(middlewares.BaseMiddleware):
     async def on_process_message(self, message: types.Message, data: dict):
         state = data.get("state")
         current_state = await state.get_state()
-        if message.text == "/start":
-            return
+
         if message.text == "/admin" and self.db.get_user(message.from_user.id).role != "ADMIN":
             raise handler.CancelHandler()
 
