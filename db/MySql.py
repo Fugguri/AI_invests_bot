@@ -151,7 +151,7 @@ class Database:
 
         return category
 
-    def update_category_count(self, name):
+    def update_category_count(self,name ):
         self.connection.ping()
         with self.connection.cursor() as cursor:
             cursor.execute(
@@ -164,6 +164,15 @@ class Database:
             self.connection.close()
             user = Category(*res)
         return user
+
+
+    def update_subscription_status(self, telegram_id, status:int = 1):
+        self.connection.ping()
+        with self.connection.cursor() as cursor:
+            cursor.execute(
+                """UPDATE Users SET subscription = %s WHERE telegram_id=%s""", (status,telegram_id,))
+            self.connection.commit()
+            self.connection.close()
 
     def update_user_data(self, telegram_id,data:dict):
         self.connection.ping()

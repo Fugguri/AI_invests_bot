@@ -52,12 +52,14 @@ async def subscribe(callback: types.CallbackQuery, state: FSMContext):
     cfg: Config = ctx_data.get()['config']
     kb: Keyboards = ctx_data.get()['keyboards']
     db: Database = ctx_data.get()['db']
+    db.update_subscription_status(callback.from_user.id)
     await callback.message.answer("Вы подписались на рассылку")
 
 async def unsubscribe(callback: types.CallbackQuery, state: FSMContext):
     cfg: Config = ctx_data.get()['config']
     kb: Keyboards = ctx_data.get()['keyboards']
     db: Database = ctx_data.get()['db']
+    db.update_subscription_status(callback.from_user.id,0)
 
     await callback.message.answer("Вы отписались от рассылки")
 
