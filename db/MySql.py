@@ -219,7 +219,6 @@ class Database:
                 FROM Users
                 WHERE telegram_id=%s""", (telegram_id,))
             res = cursor.fetchone()
-            print(res)
             if res[0] == "Нет":
                 return False
             return True
