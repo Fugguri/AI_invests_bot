@@ -11,7 +11,7 @@ class ActivityUpdaterMiddleware(middlewares.BaseMiddleware):
 
     async def on_process_message(self, message: types.Message, data: dict):
         try:
-            telegram_id= message.from_user.id
+            telegram_id=message.from_user.id
             self.db.update_activity(telegram_id)
         except:
             pass

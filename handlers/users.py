@@ -32,7 +32,6 @@ async def projects(message: types.Message, state: FSMContext):
     cfg: Config = ctx_data.get()['config']
     kb: Keyboards = ctx_data.get()['keyboards']
     db: Database = ctx_data.get()['db']
-    # await check(message)
     cat: Category = db.get_category(message.text)
     if cat:
         await message.delete()

@@ -16,7 +16,6 @@ class IsUserRegisterMiddleware(middlewares.BaseMiddleware):
 
         if message.text == "/admin" and self.db.get_user(message.from_user.id).role != "ADMIN":
             raise handler.CancelHandler()
-
         telegram_id= message.from_user.id
         if not self.db.is_user_registered(telegram_id) and not current_state:
             await start_register(message,state)
