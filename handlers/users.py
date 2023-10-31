@@ -48,7 +48,18 @@ async def buttons(callback: types.CallbackQuery, state: FSMContext):
     keyboard = db.get_button_by_callback(callback.data)
     await callback.message.answer(keyboard.message)
 
+async def subscribe(callback: types.CallbackQuery, state: FSMContext):
+    cfg: Config = ctx_data.get()['config']
+    kb: Keyboards = ctx_data.get()['keyboards']
+    db: Database = ctx_data.get()['db']
+    await callback.message.answer("Вы подписались на рассылку")
 
+async def unsubscribe(callback: types.CallbackQuery, state: FSMContext):
+    cfg: Config = ctx_data.get()['config']
+    kb: Keyboards = ctx_data.get()['keyboards']
+    db: Database = ctx_data.get()['db']
+
+    await callback.message.answer("Вы отписались от рассылки")
 
 async def check(callback: types.CallbackQuery):
     cfg: Config = ctx_data.get()['config']
@@ -91,5 +102,9 @@ def register_user_handlers(dp: Dispatcher, kb: Keyboards,db: Database):
     dp.register_callback_query_handler(back, kb.back_cd.filter(), state="*")
     dp.register_callback_query_handler(
         back, lambda x: x.data == "check", state="*")
+    dp.register_callback_query_handler(
+        subscribe, lambda x: x.data == "subs", state="*")
+    dp.register_callback_query_handler(
+        unsubscribe, lambda x: x.data == "unsubs", state="*")
     dp.register_callback_query_handler(
         buttons,  state="*")

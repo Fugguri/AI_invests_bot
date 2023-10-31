@@ -7,7 +7,7 @@ class User:
     telegram_id : int
     full_name : str
     username : str
-    has_access : str
+    subscription : str
     role : str
     is_registered : str
     name : str

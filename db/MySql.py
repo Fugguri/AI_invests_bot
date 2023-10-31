@@ -23,7 +23,7 @@ class Database:
                         telegram_id BIGINT UNIQUE NOT NULL ,
                         full_name TEXT,
                         username TEXT,
-                        has_access BOOL DEFAULT false,
+                        subscription BOOL DEFAULT false,
                         role TEXT DEFAULT 'USER',
                         is_registered TEXT DEFAULT 'Нет',
                         firstname TEXT,
