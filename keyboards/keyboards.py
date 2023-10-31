@@ -33,6 +33,7 @@ class Keyboards:
     async def category_kb(self, categories: list[Keyboard]):
         kb = InlineKeyboardMarkup()
         for cat in categories:
+            print(cat.__dict__)
             if cat.link:
                 kb.add(InlineKeyboardButton(text=cat.text, url=cat.link))
             elif cat.callback:
