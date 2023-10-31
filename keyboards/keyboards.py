@@ -24,16 +24,11 @@ class Keyboards:
 
     async def bots_kb(self, bots):
         kb = InlineKeyboardMarkup()
-        for bot in bots:
-            # kb.add(InlineKeyboardButton(text="Рассылка сообщений",
-            #                                 url="dsds"))
-            1
         return kb
 
     async def category_kb(self, categories: list[Keyboard]):
         kb = InlineKeyboardMarkup()
         for cat in categories:
-            print(cat.__dict__)
             if cat.link:
                 kb.add(InlineKeyboardButton(text=cat.text, url=cat.link))
             elif cat.callback:
