@@ -36,6 +36,26 @@ class Database:
             self.connection.commit()
 
         with self.connection.cursor() as cursor:
+            create = """CREATE TABLE IF NOT EXISTS Posts
+                        (id INT PRIMARY KEY AUTO_INCREMENT,
+                        mail_date DATETIME,
+                        mail_text TEXT,
+                        button_1_text TEXT,
+                        button_1_link TEXT,
+                        button_2_text TEXT,
+                        button_2_link TEXT,
+                        button_3_text TEXT,
+                        button_3_link TEXT,
+                        button_4_text TEXT,
+                        button_4_link TEXT,
+                        button_5_text TEXT,
+                        button_5_link TEXT                        
+                        );"""
+            cursor.execute(create)
+            self.connection.commit()
+
+
+        with self.connection.cursor() as cursor:
             create = """CREATE TABLE IF NOT EXISTS Categories
                         (id INT PRIMARY KEY AUTO_INCREMENT,
                         name TEXT,
@@ -123,6 +143,7 @@ class Database:
             for user in res:
                 result.append(Channel(*user))
         return result
+    
     def get_button_by_callback(self,callback_data:str)->Keyboard:
         self.connection.ping()
         with self.connection.cursor() as cursor:
@@ -164,7 +185,6 @@ class Database:
             self.connection.close()
             user = Category(*res)
         return user
-
 
     def update_subscription_status(self, telegram_id, status:int = 1):
         self.connection.ping()
@@ -230,12 +250,3 @@ class Database:
                 """SELECT COUNT(*) FROM Users""")
             res = cursor.fetchone()
         return res[0]
-
-
-if __name__ == "__main__":
-    db = Database()
-    from config.config import load_config
-
-    config = load_config("config.json", "texts.yml")
-    ch = Category(0, "Maria", "test", "test category", 164, 0)
-    db.add_category(ch)

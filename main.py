@@ -14,11 +14,12 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 logger = logging.getLogger(__name__)
 
 
-async def register_all_middlewares(dp, config, keyboards, db, bot, ):
-    dp.middleware.setup(is_user_register.IsUserRegisterMiddleware(db=db))
+async def register_all_middlewares(dp, config, keyboards, db, bot,):
+    dp.middleware.setup(is_user_register.IsUserRegisterMiddleware(db=db,))
     dp.middleware.setup(activity_updater.ActivityUpdaterMiddleware(db=db))
     dp.middleware.setup(environment.EnvironmentMiddleware(
         config=config, db=db, keyboards=keyboards, bot=bot))
+    dp.middleware.setup(LoggingMiddleware())
 
 
 def register_all_handlers(dp, keyboards,db):
@@ -30,7 +31,7 @@ async def main():
     logging.basicConfig(
         level=logging.INFO,
         format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
-        # filename="logs.log"
+        filename="logs.log"
     )
     logger.info("Starting bot")
     print("Starting bot")
